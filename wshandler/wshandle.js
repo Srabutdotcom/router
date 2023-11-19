@@ -1,5 +1,5 @@
 const meta = import.meta
-import { getValueBasedOnType, parseBlob } from '../../library/tofromblob/extractblob.js';
+import { parseBlob } from '../../library/tofromblob/extractblob.js';
 import { fetchFile } from '../utils.js';
 import { typeofData } from '../../library/basic/typeof.js';
 import { handleSignIn } from './handleSignIn.js';

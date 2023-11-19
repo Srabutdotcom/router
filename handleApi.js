@@ -1,5 +1,5 @@
-import { baseUrl } from '../../../meta.js';
-import { createResponse, fetchFile } from '../utils.js';
+import { baseUrl } from '../../meta.js';
+import { createResponse, fetchFile } from './utils.js';
 
 export function handleApi(req){
    const sp=new URL(req.url).searchParams

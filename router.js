@@ -3,9 +3,9 @@ import { handleStatic } from './static.js';
 import { handleHome, handleError } from './home.js';
 import { handleWebsocket } from './websocket.js';
 import { pathType } from '../library/path/pathtype.js';
-import { handleApi } from './wshandler/handleApi.js';
+import { handleApi } from './handleApi.js';
 
-export async function handler(req, info) {
+export function handler(req, info) {
    // log info to file
    logaccess(req, info)
    
@@ -16,7 +16,7 @@ export async function handler(req, info) {
       'isFile': ()=>handleStatic(req, pathInfo.data),
       'isNotFound': ()=>handleError(`${pathInfo.data.pathname} is Not Found`),
       'isWebsocket': ()=>handleWebsocket(req),
-      'isSymlink': ()=>handleError('is Symlink'),
+      'isSymlink': ()=>handleStatic(req, pathInfo.data),//()=>handleError('is Symlink'),
       'isApi':()=>handleApi(req)
    }
    //debugger;

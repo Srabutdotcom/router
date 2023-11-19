@@ -1,4 +1,4 @@
-import { contentType } from '../deps.js';
+import { contentType } from "https://deno.land/std@0.153.0/media_types/mod.ts";
 
 export async function fetchFile(url, type) {
    //debugger;
@@ -13,7 +13,7 @@ export async function fetchFile(url, type) {
    }
 }
 
-export async function createResponse(d, pathname) {
+export function createResponse(d, pathname) {
    const mime = contentType(pathname.split('.').pop())
    //! please don't put 'ts' extension file in client directory as ts refer to video i/o typescript based on contentType
    const headers = new Headers({
