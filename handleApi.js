@@ -1,21 +1,17 @@
 import { baseUrl } from '../../meta.js';
-import { createResponse, fetchFile } from './utils.js';
+import { handleIsNotFound } from './home.js';
+import { serveFile } from './static.js';
 
-export function handleApi(req){
-   const sp=new URL(req.url).searchParams
-   const request = sp.get('request');
-   const requestMap = {
-      'file': ()=>responseFile(sp)
+export async function handleApi(req){
+   const {searchParams}=new URL(req.url)
+   const request = searchParams.get('request');
+   switch (request) {
+      case 'file': return await responseFile(searchParams.get('filepath'))
+      default: return handleIsNotFound(`${searchParams.get('filepath')} is not found`)
    }
-   return requestMap[request]();
 }
 
-async function responseFile(params){
-   const filepath = params.get('filepath');
-   /* const filename = params.get('filename');
-   const type = params.get('type');
-   const path = params.get('path') */
+async function responseFile(filepath){
    const pathname = new URL(`./serv/forclient/${filepath}`,baseUrl);
-   const blob = await fetchFile(pathname,'blob');
-   return await createResponse(blob,filepath)
+   return await serveFile(pathname) ; 
 }

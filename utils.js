@@ -1,4 +1,4 @@
-import { contentType } from "https://deno.land/std@0.153.0/media_types/mod.ts";
+import { contentType } from "https://deno.land/std@0.208.0/media_types/mod.ts";
 
 export async function fetchFile(url, type) {
    //debugger;
@@ -22,3 +22,4 @@ export function createResponse(d, pathname) {
    const blob = new Blob([d],{type:mime})
    return new Response(blob, headers)
 }
+
