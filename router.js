@@ -1,30 +1,10 @@
 import { baseUrl, ROOT, HTTPPORT, HTTPSPORT } from '../../meta.js';
 import { log } from '../logger/logger.js';
-import { handleStatic, serveFile } from './static.js';
-import { handleHome, handleError, handleIsNotFound } from './home.js';
+import { serveFile } from './static.js';
+import { handleHome, handleIsNotFound } from './home.js';
 import { handleWebsocket } from './websocket.js';
-import { pathType } from '../library/path/pathtype.js';
 import { pathInfoSync } from '../library/path/pathInfo.js';
 import { handleApi } from './handleApi.js';
-
-export function handler(req = new Request, info) {
-   // log info to file
-   logaccess(req, info)
-
-   const pathInfo = pathType(req)
-   
-   const pathMap = {
-      'isHome': () => handleHome(req),
-      'isFile': () => handleStatic(req, pathInfo.data),
-      'isNotFound': () => handleError(`${pathInfo.data.pathname} is Not Found`),
-      'isWebsocket': () => handleWebsocket(req),
-      'isSymlink': () => handleStatic(req, pathInfo.data),//()=>handleError('is Symlink'),
-      'isApi': () => handleApi(req)
-   }
-   
-   return pathMap?.["" + pathInfo]();
-
-}
 
 function logaccess(req, info) {
    const { transport, hostname, port } = info.remoteAddr;
@@ -63,10 +43,10 @@ export async function httpHandler(req, info) {
    }
 }
 
-async function dirTypes(req, info) {
+function dirTypes(req, _info) {
    const url = new URL(req.url);
    switch (url.pathname) {
-      case '/': return await handleHome()
+      case '/': return handleHome()
       case '/ws': 
          if (req.headers.get("upgrade").toLowerCase() === 'websocket') return handleWebsocket(req);
          return handleIsNotFound(`${url.href} is not found`)
@@ -87,7 +67,7 @@ function redirectoHttps(req, info) {
    return response
 }
 
-function httpsURL(req = new Request, info) {
+function httpsURL(req = new Request, _info) {
    const { hostname/* , port, protocol, pathname, search */ } = new URL(req.url)
    if(hostname ==='localhost')return req.url.replace('http','https').replace(HTTPPORT, HTTPSPORT) 
    return req.url.replace('http', 'https')

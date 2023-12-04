@@ -1,6 +1,5 @@
-const meta = import.meta
 import { parseBlob } from '../../library/tofromblob/extractblob.js';
-import { fetchFile } from '../utils.js';
+import { importBlob } from '../../library/importir/importfile.js';
 import { typeofData } from '../../library/basic/typeof.js';
 import { handleSignIn } from './handleSignIn.js';
 import { handleSignUp } from './handleSignUp.js';
@@ -18,11 +17,11 @@ export function handleWs(_data,sock){
    sock.send('done')
 }
 
-async function handleStringMsgFrWs(data, sock){
+function handleStringMsgFrWs(data, sock){
    switch (data) {
       case 'tofromblob': {
-         const blobifyBlob = await fetchFile(new URL('../../library/tofromblob/blobify.js',meta.url),'blob') 
-         const extractBlob = await fetchFile(new URL('../../library/tofromblob/extractblob.js',meta.url),'blob') 
+         const blobifyBlob = importBlob('./serv/library/tofromblob/blobify.js')//await fetchFile(new URL('../../library/tofromblob/blobify.js',meta.url),'blob') 
+         const extractBlob = importBlob('./serv/library/tofromblob/extractblob.js')//await fetchFile(new URL('../../library/tofromblob/extractblob.js',meta.url),'blob') 
          return sock.send(new Blob([blobifyBlob, extractBlob]))
       }
       case 'session': {

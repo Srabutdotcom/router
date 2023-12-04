@@ -1,33 +1,35 @@
-import { fetchFile } from './utils.js'
-import { baseUrl } from '../../meta.js'
-
-export async function handleHome(_req){
-  const text = await fetchFile(new URL('./serv/html/home.htm',baseUrl),'text')
-
-  return new Response(text,
-    {"headers":new Headers({
-        'Content-Type': 'text/html; charset=UTF-8'
-      })
-    });
+const htmlHeader = {
+  "headers": new Headers({
+    'Content-Type': 'text/html; charset=UTF-8'
+  })
 }
 
-export async function handleError(msg){
+const htmlString =
+`<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>Aicone</title>    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Aicone">
+    <meta property="og:description" content="To make you happier and better">
+    <meta property="og:image" content="favicon.ico">
+    <meta property="og:url" content="https://aicone.id">
+    <meta name="robots" content="index, follow">
+    <script src="index.js" type='module'></script>
+  </head>
+<body class="antialiased">
+</body>
+</html>`
+
+export function handleHome(_req) {
+  return new Response(htmlString, htmlHeader);
+}
+
+export function handleError(msg) {
   console.debug(msg);
   Deno.exit(); throw new Error(msg);
-  let text = await fetchFile(new URL('./serv/html/error.htm',baseUrl),'text')
-  text = text.replace('{err}',msg)
-
-  return new Response(text,
-    {"headers":new Headers({
-        'Content-Type': 'text/html; charset=UTF-8'
-      })
-    });
 }
 
-export function handleIsNotFound(msg="message"){
-  return new Response(msg,
-    {"headers":new Headers({
-        'Content-Type': 'text/html; charset=UTF-8'
-      })
-    });
+export function handleIsNotFound(msg = "message") {
+  return new Response(msg, htmlHeader);
 }

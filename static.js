@@ -1,5 +1,4 @@
 import { contentType } from "https://deno.land/std@0.208.0/media_types/mod.ts";
-import { fetchFile, createResponse } from "./utils.js";
 
 export function serveFile(filepath = new URL) {
    return new Promise(function (resolve, _reject) {
@@ -18,10 +17,4 @@ export function serveFile(filepath = new URL) {
             )
          })
    })
-}
-
-export async function handleStatic(_req, filePath) {
-   console.debug('handleStatic :' + filePath)
-   const blob = await fetchFile(filePath, 'blob');
-   return await createResponse(blob, filePath.pathname)
 }
