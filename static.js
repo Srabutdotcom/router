@@ -1,20 +1,24 @@
 import { contentType } from "https://deno.land/std@0.208.0/media_types/mod.ts";
-import { writeBlob, readBlob } from "../library/tofromblob/savefile.js";
+import { mimetypes } from "./mimetypes/savemimeworker.js";
 
-const PATH_MIMETYPES = './serv/router/mimetypes.dat'
-const mimetypes = await readBlob(PATH_MIMETYPES)??new Map;debugger;
+const mimeWorker = new Worker(new URL('./mimetypes/savemimeworker.js', import.meta.url).href,  { type: "module" });
 
 export function serveFile(filepath = new URL) {
    return new Promise(function (resolve, _reject) {
       fetch(filepath)
-         .then(response => response.blob())
-         .then(blob => {
-            
+         .then(response => {;return response.blob()})
+         .then(blob => { 
+         
             const ext = filepath.pathname.split('.').pop();
             const mime = mimetypes.get(ext)??contentType(ext); 
-            mimeTypesProxy.set(ext, mime);
+            // save and update mimetypes for latter use
+            mimeWorker.postMessage([ext, mime])
+            
             const headers = new Headers({
-               'Content-Type': mime
+               'Content-Type': mime,
+               'Access-Control-Allow-Origin': '*',
+               'Access-Control-Allow-Methods': 'GET',
+               'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept',
             })
             return resolve(
                new Response(
@@ -25,17 +29,3 @@ export function serveFile(filepath = new URL) {
          })
    })
 }
-
-const mimeTypesProxy = new Proxy(mimetypes, {
-   get(target, name, receiver) {
-      const value = Reflect.get(target, name);
-      if (value instanceof Function) {    // ***  
-         return function (...args) {
-            value.apply(this === receiver ? target : this, args);
-            writeBlob(PATH_MIMETYPES,mimetypes)
-            return true//value.apply(this === receiver ? target : this, args);
-          };
-      }                                   // ***
-      return value;
-   }
-})

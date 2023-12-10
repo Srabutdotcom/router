@@ -13,7 +13,7 @@ function logaccess(req, info) {
 
 function pathInfo(req, info) {
    // log info to file
-   logaccess(req, info)
+   logaccess(req, info);
    const Url = new URL(req.url);
    const filePath = new URL(ROOT + Url.pathname, baseUrl);
    return {filePath, _pathInfo: pathInfoSync(filePath)}
@@ -39,14 +39,23 @@ export async function httpHandler(req, info) {
          return await serveFile(filePath);
       }
       case 'isNotFound':
+      case 'isDirectory': return dirTypesForHttp(req, info)
       default: return redirectoHttps(req, info)
    }
 }
 
-function dirTypes(req, _info) {
+function dirTypesForHttp(req, info) {
    const url = new URL(req.url);
    switch (url.pathname) {
-      case '/': return handleHome()
+      case '/api': { return handleApi(req) }
+      default: return redirectoHttps(req, info)
+   }
+}
+
+function dirTypes(req, info) {
+   const url = new URL(req.url);
+   switch (url.pathname) {
+      case '/': return handleHome(req, info)
       case '/ws': 
          if (req.headers.get("upgrade").toLowerCase() === 'websocket') return handleWebsocket(req);
          return handleIsNotFound(`${url.href} is not found`)

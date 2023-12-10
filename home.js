@@ -1,6 +1,10 @@
+import { logRequestCount } from './hostnamelimiter.js'
+
 const htmlHeader = {
   "headers": new Headers({
-    'Content-Type': 'text/html; charset=UTF-8'
+    'Content-Type': 'text/html; charset=UTF-8',
+    'Access-Control-Allow-Origin': '*',
+    //'Timing-Allow-Origin': '*'
   })
 }
 
@@ -21,8 +25,10 @@ const htmlString = /* html */
 </body>
 </html>`
 
-export function handleHome(_req) {
-  return new Response(htmlString, htmlHeader);
+export function handleHome(req, info) {
+  // limit the access
+  return logRequestCount(req, info, ()=>new Response(htmlString, htmlHeader))
+  //return new Response(htmlString, htmlHeader);
 }
 
 export function handleError(msg) {
