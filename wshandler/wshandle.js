@@ -1,12 +1,12 @@
 import { parseBlob } from '../../library/tofromblob/extractblob.js';
 import { importBlob } from '../../library/importir/importfile.js';
-import { typeofData } from '../../library/basic/typeof.js';
+import { whatis } from '../../library/aids/whatis/whatis.js';
 import { handleSignIn } from './handleSignIn.js';
 import { handleSignUp } from './handleSignUp.js';
 import { handleCheckUserName } from './handleCheckUserName.js';
 
 export function handleWs(_data,sock){
-   const type = typeofData(_data);
+   const type = whatis(_data);
    
    switch (type) {
       case 'string': return handleStringMsgFrWs(_data, sock)
