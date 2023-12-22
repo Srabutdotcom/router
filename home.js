@@ -1,10 +1,12 @@
 import { logRequestCount } from './hostnamelimiter.js'
 
+const cookie = JSON.stringify({session: sessionStorage.getItem('session')})
+
 const htmlHeader = {
   "headers": new Headers({
     'Content-Type': 'text/html; charset=UTF-8',
     'Access-Control-Allow-Origin': '*',
-    //'Timing-Allow-Origin': '*'
+    'Set-Cookie' : cookie,// access using document.cookie
   })
 }
 
