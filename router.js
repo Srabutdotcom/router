@@ -3,7 +3,7 @@ import { log } from '../logger/logger.js';
 import { serveFile } from './static.js';
 import { handleHome, handleIsNotFound } from './home.js';
 import { handleWebsocket } from './websocket.js';
-import { pathInfoSync } from '../library/path/pathInfo.js';
+import { pathInfoSync } from 'https://raw.githubusercontent.com/Srabutdotcom/path/master/pathInfo.min.js'//'../library/path/pathInfo.js';
 import { handleApi } from './handleApi.js';
 
 function logaccess(req, info) {
