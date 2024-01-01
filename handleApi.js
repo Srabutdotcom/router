@@ -12,6 +12,6 @@ export async function handleApi(req){
 }
 
 async function responseFile(filepath){
-   const pathname = new URL(`./serv/forclient/${filepath}`,baseUrl);
+   const pathname = new URL(`./forclient/${filepath}`,baseUrl);
    return await serveFile(pathname) ; 
 }
