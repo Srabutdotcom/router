@@ -1,5 +1,6 @@
 import { logRequestCount } from './hostnamelimiter.js'
 
+sessionStorage.setItem("session", crypto.randomUUID());
 const cookie = JSON.stringify({session: sessionStorage.getItem('session')})
 
 const htmlHeader = {

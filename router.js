@@ -1,19 +1,19 @@
-import { baseUrl, ROOT, HTTPPORT, HTTPSPORT } from '../../meta.js';
-import { log } from '../logger/logger.js';
+import { baseUrl, ROOT, HTTPPORT, HTTPSPORT } from '../server/meta.js';//'../../meta.js';
+//import { log } from '../logger/logger.js';
 import { serveFile } from './static.js';
 import { handleHome, handleIsNotFound } from './home.js';
 import { handleWebsocket } from './websocket.js';
 import { pathInfoSync } from 'https://raw.githubusercontent.com/Srabutdotcom/path/master/pathInfo.min.js'//'../library/path/pathInfo.js';
 import { handleApi } from './handleApi.js';
-
-function logaccess(req, info) {
+debugger;
+/* function logaccess(req, info) {
    const { transport, hostname, port } = info.remoteAddr;
    log(`${transport} ${hostname} ${port} ${req.url}`);
-}
+} */
 
 function pathInfo(req, info) {
    // log info to file
-   logaccess(req, info);
+   //logaccess(req, info);
    const Url = new URL(req.url);
    const filePath = new URL(ROOT + Url.pathname, baseUrl);
    return {filePath, _pathInfo: pathInfoSync(filePath)}

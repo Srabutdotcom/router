@@ -1,4 +1,4 @@
-import { handleWs } from '../wshandler/wshandle.js';
+//import { handleWs } from '../wshandler/wshandle.js';
 
 export function handleWebsocket(req) {
   //debugger;
@@ -15,6 +15,10 @@ export function handleWebsocket(req) {
   socket.onclose = (_e) => { console.log("socket closed"); }
   return response;
   //return new Response("Hello, handleWebsocket");
+}
+
+function handleWs(data, socket) {
+  socket.send('done')
 }
 
 

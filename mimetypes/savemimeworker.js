@@ -1,12 +1,13 @@
-import { writeBlob, readBlob } from "../../library/tofromblob/savefile.js";
-const PATH_MIMETYPES = './serv/router/mimetypes/mimetypes.dat'
+import { baseUrl } from "../../server/meta.js";
+import { writeBlob, readBlob } from "https://deno.land/x/blobify/dist/blobify.deno.bundle.js?source";debugger;
+const PATH_MIMETYPES = new URL('../router/mimetypes/mimetypes.dat',baseUrl)
 
 // deno-lint-ignore no-unused-vars
 function onmessage(e){
    const [ext, mime] = e.data;
    if(mimetypes.has(ext))return;
    mimetypes.set(ext,mime)
-   writeBlob('./serv/router/mimetypes/mimetypes.dat',mimetypes);console.log('done write mimetypes')
+   writeBlob(PATH_MIMETYPES,mimetypes);console.log('done write mimetypes')
    //postMessage(r)
 }
 

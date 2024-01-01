@@ -1,4 +1,4 @@
-import { baseUrl } from '../../meta.js';
+import { baseUrl } from '../server/meta.js';//'../../meta.js';
 import { handleIsNotFound } from './home.js';
 import { serveFile } from './static.js';
 
