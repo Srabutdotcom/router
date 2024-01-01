@@ -8,7 +8,7 @@ export function handleWebsocket(req) {
   socket.onmessage = async (e) => {
     //* data to handle
     if (socket.readyState === socket.CLOSING) { console.log('socket is closing'); return; }
-    await handleWs(e.data, socket);
+    handleWs(e.data, socket);
     //return socket.close();debugger;
   };
   socket.onerror = (e) => { console.log("socket errored:", e); }

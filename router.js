@@ -5,7 +5,7 @@ import { handleHome, handleIsNotFound } from './home.js';
 import { handleWebsocket } from './websocket.js';
 import { pathInfoSync } from 'https://raw.githubusercontent.com/Srabutdotcom/path/master/pathInfo.min.js'//'../library/path/pathInfo.js';
 import { handleApi } from './handleApi.js';
-debugger;
+
 /* function logaccess(req, info) {
    const { transport, hostname, port } = info.remoteAddr;
    log(`${transport} ${hostname} ${port} ${req.url}`);
