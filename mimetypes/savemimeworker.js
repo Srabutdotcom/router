@@ -1,6 +1,6 @@
-import { baseUrl } from "../../server/meta.js";
-import { writeBlob, readBlob } from "https://deno.land/x/blobify/dist/blobify.deno.bundle.js?source";
-const PATH_MIMETYPES = new URL('../router/mimetypes/mimetypes.dat',baseUrl)
+const baseUrl = import.meta.url;
+import { writeBlob, readBlob } from '../../blobify/src/mod.js';//"https://deno.land/x/blobify/dist/blobify.deno.bundle.js?source";
+const PATH_MIMETYPES = new URL('./mimetypes.dat', baseUrl)
 
 // deno-lint-ignore no-unused-vars
 function onmessage(e){
