@@ -1,4 +1,4 @@
-import { contentType } from "https://deno.land/std@0.208.0/media_types/mod.ts";
+import { contentType } from "./deps.js";
 import { mimetypes } from "./mimetypes/savemimeworker.js";
 
 const mimeWorker = new Worker(new URL('./mimetypes/savemimeworker.js', import.meta.url).href,  { type: "module" });

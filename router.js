@@ -1,5 +1,5 @@
 const baseUrl = import.meta.url; 
-import { ROOT, HTTPPORT, HTTPSPORT } from '../server/meta.js';//'../../meta.js';
+import { ROOT, HTTPPORT, HTTPSPORT } from './deps.js';
 //import { log } from '../logger/logger.js';
 import { serveFile } from './static.js';
 import { handleHome, handleIsNotFound } from './home.js';

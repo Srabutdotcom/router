@@ -1,4 +1,4 @@
-import { handleWs } from '../wshandler/wshandler.js';
+import { handleWs } from './deps.js';
 
 export function handleWebsocket(req) {
   
