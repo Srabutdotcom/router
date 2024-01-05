@@ -27,18 +27,17 @@ class Handler {
          case 'isSymlink': return serveFile(filePath);
          case 'isNotFound':
          case 'isDirectory': {
-            debugger;
             return this.handler?.[Url.pathname](req, info) ?? handleIsNotFound(`${Url.href} is not found`)
          }
       }
    }
 }
 
-const httpsHandler = new Handler;
+const handler = new Handler;
 
-httpsHandler.addHandler("/", handleHome);
-httpsHandler.addHandler("/ws", checkSocket);
-httpsHandler.addHandler('/api', handleApi);
+handler.addHandler("/", handleHome);
+handler.addHandler("/ws", checkSocket);
+handler.addHandler('/api', handleApi);
 
 function checkSocket(req, info) {
    if (req.headers.get("upgrade").toLowerCase() === 'websocket') return handleWebsocket(req);
@@ -62,13 +61,4 @@ function httpsURL(req = new Request, _info) {
    return req.url.replace('http', 'https')
 }
 
-const httpHandler = new Handler;
-
-if (PROTOCOL === 'http') {
-   httpHandler.addHandler("/", handleHome);
-   httpHandler.addHandler('/api', handleApi);
-} else if (PROTOCOL === 'https') {
-   httpHandler.addHandler("/", redirectoHttps);
-}
-
-export { httpsHandler, httpHandler }
+export { handler }
