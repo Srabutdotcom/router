@@ -11,7 +11,8 @@ import { serveFile } from './static.js';
    }
 } */
 
-async function responseFile(filepath) {
+async function responseFile(searchParams) {
+   const filepath = searchParams.get('filepath')
    const pathname = new URL(`./forclient/${filepath}`, baseUrl);
    return await serveFile(pathname);
 }
@@ -30,7 +31,7 @@ class HandleApi {
    handle(req, info) {
       const { searchParams } = new URL(req.url)
       const request = searchParams.get('request');
-      return this.handler?.[request](req, info) ?? handleIsNotFound(`${req.url} is not found`)
+      return this.handler?.[request](searchParams) ?? handleIsNotFound(`${req.url} is not found`)
    }
 }
 
