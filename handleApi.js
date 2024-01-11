@@ -1,4 +1,4 @@
-import { baseUrl } from './deps.js';//'../../meta.js';
+import { baseUrl, userData, blobify } from './deps.js';//'../../meta.js';
 import { handleIsNotFound } from './home.js';
 import { serveFile } from './static.js';
 
@@ -38,5 +38,13 @@ class HandleApi {
 const handleApi = new HandleApi;
 
 handleApi.addHandler('file', responseFile);
+handleApi.addHandler('user', responseUser);
+
+async function responseUser(searchParams){
+   const name = searchParams.get('name');
+   const found = await userData.getUser(name);
+   if(!found)return new Response(blobify(false))
+   return new Response(blobify(true));
+}
 
 export { handleApi }

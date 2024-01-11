@@ -37,7 +37,7 @@ const handler = new Handler;
 
 handler.addHandler("/", handleHome);
 handler.addHandler("/ws", checkSocket);
-handler.addHandler('/api', handleApi);
+handler.addHandler('/api', handleApi.handle);
 
 function checkSocket(req, info) {
    if (req.headers.get("upgrade").toLowerCase() === 'websocket') return handleWebsocket(req);
